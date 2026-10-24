@@ -1,9 +1,11 @@
 
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import About from "./pages/About";
+import { AuthProvider } from "./contexts/AuthContext";
+import Header from "./components/header";
+import Footer from "./components/footer";
+import About from "./pages/about";
+import Login from "./pages/login";
 import "./App.css";
 
 function Home() {
@@ -48,16 +50,17 @@ function Home() {
 
 function App() {
   return (
-    <>
+    <AuthProvider>
       <Header />
 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
 
       <Footer />
-    </>
+    </AuthProvider>
   );
 }
 

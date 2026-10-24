@@ -1,7 +1,11 @@
 
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+import { memo } from "react";
 
 function Header() {
+  const { user, signOut } = useAuth();
+
   return (
     <header className="site-header">
       <Link to="/" className="logo">
@@ -20,11 +24,20 @@ function Header() {
         <a href="#contact">Contact</a>
       </nav>
 
-      <Link to="/about" className="header-button">
-        Explore DishaAI
-      </Link>
+      {user ? (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <span>{user.email}</span>
+          <button onClick={signOut} className="header-button">
+            Sign Out
+          </button>
+        </div>
+      ) : (
+        <Link to="/login" className="header-button">
+          Sign In
+        </Link>
+      )}
     </header>
   );
 }
 
-export default Header;
+export default memo(Header);
